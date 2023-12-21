@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SecurityProyect2
 {
@@ -18,6 +19,15 @@ namespace SecurityProyect2
         private void label2_Click(object sender, EventArgs e)
         {
 
+        }
+        private Boolean comprarSHA256(String p_cadena1, String p_cadena2) { 
+            Boolean comparacion = false;
+
+            if (p_cadena1.Equals(p_cadena2)) {
+                comparacion = true;
+            }
+
+            return comparacion;
         }
         
         //Metodo para validar número de tarjeta por medio de una regExp
@@ -63,6 +73,14 @@ namespace SecurityProyect2
                 var decryptedString = encriptacion.getAES256desEncript(encryptedString);
                 this.tb_sha256_des.Text = decryptedString.ToString();
 
+                //Comparamos cadenas
+                if (comprarSHA256(this.tbo_sha256.Text, this.tb_sha256_des.Text))
+                {
+                    MessageBox.Show("Las cadenas coinciden\nOrigina : \n" +  this.tbo_sha256.Text + "\n\nDesencriptado:\n"+ this.tb_sha256_des.Text, "Comparación de cadenas SHA256", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else {
+                    MessageBox.Show("Ocurrió un problema en la desencriptación las cadenas no coinciden", "Comparación de cadenas SHA256", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
             }
             else
